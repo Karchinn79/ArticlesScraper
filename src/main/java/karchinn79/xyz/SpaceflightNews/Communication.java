@@ -14,11 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 
 public class Communication {
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    util util;
+
     private final String webURL = "https://api.spaceflightnewsapi.net/v3/articles";
     private final String LIMITPARAM = "?_limit=";
     private final String SKIPPARAM = "&_start=";
@@ -33,19 +37,23 @@ public class Communication {
                 });
         List<Article> allArticles = responseEntity.getBody();
 
-
+         List<Pattern> blackListPatterns =
+                util.blackList
+                        .stream()
+                        .map(word -> Pattern.compile("\\b" + Pattern.quote(word) + "\\b"))
+                        .collect(Collectors.toList());
         ArrayList<Integer> ids = new ArrayList<>();
-        for(Article artas: allArticles){
+        for(int i = 0; i < allArticles.size(); i++){
 
-            for (Pattern pattern : util.blackListPatterns) {
-                if (pattern.matcher(artas.getTitle()).find()) {
-                    ids.add(artas.getId());
+            for (Pattern pattern : blackListPatterns) {
+                if (pattern.matcher(allArticles.get(i).getTitle()).find()) {
+                    ids.add(i);
                 }
             }
         }
-        for(int i: ids){
-            allArticles.remove(i);
-        }
+//        for(int i: ids){
+//            allArticles.remove(i);
+//        }
         return allArticles;
     }
 

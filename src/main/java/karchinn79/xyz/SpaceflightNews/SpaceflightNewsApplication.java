@@ -34,12 +34,18 @@ public class SpaceflightNewsApplication implements CommandLineRunner{
 	public Communication communication(){
 		return new Communication();
 	}
+	@Bean
+	public util util(){
+		return new util();
+	}
 
 	@Autowired
 	ArticleService articleService;
+	@Autowired
+	util util;
 	@Override
 	public void run(String... args) throws Exception {
-		util.addWord("Force");
+
 		List<Article> ars = communication().getArticles(0,0);
 		for(Article a : ars){
 			articleService.saveArticle(a);//14907
