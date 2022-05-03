@@ -2,6 +2,7 @@ package karchinn79.xyz.SpaceflightNews;
 
 import karchinn79.xyz.SpaceflightNews.entity.Article;
 import karchinn79.xyz.SpaceflightNews.service.ArticleService;
+import karchinn79.xyz.SpaceflightNews.util.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class SpaceflightNewsApplication implements CommandLineRunner{
@@ -31,16 +34,18 @@ public class SpaceflightNewsApplication implements CommandLineRunner{
 	public Communication communication(){
 		return new Communication();
 	}
+
 	@Autowired
 	ArticleService articleService;
 	@Override
 	public void run(String... args) throws Exception {
+		util.addWord("Force");
 		List<Article> ars = communication().getArticles(0,0);
 		for(Article a : ars){
-			articleService.saveArticle(a);
+			articleService.saveArticle(a);//14907
 			//System.out.println(a);
 		}
-
+		ExecutorService threadPool = Executors.newFixedThreadPool(8);
 	}
 }
 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/html">
+<title>El pablo</title>
+<body>
+<table>
+    <th>Current Tasks</th>
+    <tr>
+        <td>ID</td>
+        <td>Название</td>
+        <td>Источник</td>
+        <td>Содержимое</td>
+        <td>Дата добавления</td>
+    </tr>
+    <tr th:each="article : ${articles}">
+
+        <td><span th:text="${article.id}"/> </td>
+        <td><span th:text="${article.title}"> Название </span></td>
+        <td><span th:text="${article.newsSite}"> Источник </span></td>
+        <td><span th:text="${article.summary}"> Текст </span></td>
+        <td><span th:text="${article.publishedAt}"> Дата добавления </span></td>
+
+
+             </td>
+    </tr>
+</table>
+</body>
+</html>
