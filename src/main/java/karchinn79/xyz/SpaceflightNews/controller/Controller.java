@@ -1,8 +1,10 @@
 package karchinn79.xyz.SpaceflightNews.controller;
 
+import karchinn79.xyz.SpaceflightNews.logic.Logic;
 import karchinn79.xyz.SpaceflightNews.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Controller {
     @Autowired
     ArticleService articleService;
+    @Autowired
+    Logic logic;
 
     @RequestMapping("/")
     public String getAllArticles(Model model){
@@ -21,5 +25,15 @@ public class Controller {
     public String getArticleById(@PathVariable("id") int id, Model model){
         model.addAttribute("articleid", articleService.getAticleById(id));
         return "articleById";
+    }
+    @GetMapping("/clearDB")
+    public String clearDB(){
+        articleService.clearDB();
+        return "redirect:./";
+    }
+    @GetMapping("/loadArticles")
+    public String loadArticles(){
+        logic.loadArticles();
+        return "redirect:./";
     }
 }

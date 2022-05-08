@@ -2,16 +2,19 @@ package karchinn79.xyz.SpaceflightNews.service;
 
 import karchinn79.xyz.SpaceflightNews.DAO.ArticlesDAO;
 import karchinn79.xyz.SpaceflightNews.entity.Article;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.Query;
 import java.util.List;
 
 @Service
 public class ArticleService {
     @Autowired
     ArticlesDAO articlesDAO;
+
 
     @Transactional
     public List<Article> getAllArticles(){
@@ -31,5 +34,12 @@ public class ArticleService {
     }
     public boolean isExists(int id){
         return articlesDAO.existsById(id);
+    }
+    @Transactional
+    public void clearDB(){
+        List<Article> articles = getAllArticles();
+        for(Article a : articles){
+            removeArticleById(a.getId());
+        }
     }
 }

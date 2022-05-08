@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class util {
-    public List<String> blackList = new ArrayList<>();
+    public static List<String> blackList = new ArrayList<>();
 
     public  void addWord(String word){
         if(word == null || word.equals("")){

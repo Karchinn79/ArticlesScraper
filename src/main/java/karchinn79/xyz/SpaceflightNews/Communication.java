@@ -3,14 +3,14 @@ package karchinn79.xyz.SpaceflightNews;
 import karchinn79.xyz.SpaceflightNews.entity.Article;
 import karchinn79.xyz.SpaceflightNews.util.util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 public class Communication {
     @Autowired
     private RestTemplate restTemplate;
-    @Autowired
-    util util;
+
 
     private final String webURL = "https://api.spaceflightnewsapi.net/v3/articles";
     private final String LIMITPARAM = "?_limit=";
@@ -51,9 +50,9 @@ public class Communication {
                 }
             }
         }
-//        for(int i: ids){
-//            allArticles.remove(i);
-//        }
+        for(int i: ids){
+            allArticles.remove(i);
+        }
         return allArticles;
     }
 
