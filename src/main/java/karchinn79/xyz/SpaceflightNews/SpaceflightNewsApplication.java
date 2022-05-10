@@ -1,29 +1,15 @@
 package karchinn79.xyz.SpaceflightNews;
 
-import karchinn79.xyz.SpaceflightNews.entity.Article;
+
 import karchinn79.xyz.SpaceflightNews.logic.Logic;
-import karchinn79.xyz.SpaceflightNews.service.ArticleService;
-import karchinn79.xyz.SpaceflightNews.util.util;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
+import org.hibernate.context.spi.CurrentSessionContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityManagerFactory;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class SpaceflightNewsApplication {
@@ -41,21 +27,9 @@ public class SpaceflightNewsApplication {
 		return new Communication();
 	}
 	@Bean
-	public Logic logic(){
-		return new Logic();
-	}
-//	@Autowired
-//	ArticleService articleService;
-//
-//	@Override
-//	public void run(String... args) throws Exception {
-//
-//		List<Article> ars = communication().getArticles(0,0);
-//		for(Article a : ars){
-//			articleService.saveArticle(a);//14907
-//			//System.out.println(a);
-//		}
-//		ExecutorService threadPool = Executors.newFixedThreadPool(8);
-//	}
+	public Logic logic(){return new Logic();}
+
+	CurrentSessionContext currentSessionContext;
+
 }
 

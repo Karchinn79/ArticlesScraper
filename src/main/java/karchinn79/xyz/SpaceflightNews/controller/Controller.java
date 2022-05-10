@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @org.springframework.stereotype.Controller
-@RequestMapping("/articles/")
+@RequestMapping("/articles")
 public class Controller {
+
     @Autowired
     ArticleService articleService;
     @Autowired
@@ -35,5 +36,10 @@ public class Controller {
     public String loadArticles(){
         logic.loadArticles();
         return "redirect:./";
+    }
+    @GetMapping("/addToBlackList/{word}")
+    public String addToBlackList(@PathVariable("word") String word){
+        logic.addToBlackList(word);
+        return "redirect:../";
     }
 }

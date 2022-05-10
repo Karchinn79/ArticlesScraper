@@ -1,14 +1,17 @@
 package karchinn79.xyz.SpaceflightNews.util;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-public class util {
+
+public class Util {
+
     public static List<String> blackList = new ArrayList<>();
 
-    public  void addWord(String word){
+    public static void addWord(String word){
         if(word == null || word.equals("")){
             //exception here
         }
@@ -17,4 +20,7 @@ public class util {
         }
     }
 
+    public static List<String> getBlackList() {
+        return blackList;
+    }
 }

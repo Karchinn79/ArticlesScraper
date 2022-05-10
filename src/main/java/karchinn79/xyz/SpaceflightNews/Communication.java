@@ -1,7 +1,7 @@
 package karchinn79.xyz.SpaceflightNews;
 
 import karchinn79.xyz.SpaceflightNews.entity.Article;
-import karchinn79.xyz.SpaceflightNews.util.util;
+import karchinn79.xyz.SpaceflightNews.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -37,20 +37,25 @@ public class Communication {
         List<Article> allArticles = responseEntity.getBody();
 
          List<Pattern> blackListPatterns =
-                util.blackList
+                Util.blackList
                         .stream()
                         .map(word -> Pattern.compile("\\b" + Pattern.quote(word) + "\\b"))
                         .collect(Collectors.toList());
+
         ArrayList<Integer> ids = new ArrayList<>();
+        System.out.println("slurp");
         for(int i = 0; i < allArticles.size(); i++){
 
             for (Pattern pattern : blackListPatterns) {
                 if (pattern.matcher(allArticles.get(i).getTitle()).find()) {
                     ids.add(i);
+                    System.out.println("slurp2");
                 }
             }
         }
-        for(int i: ids){
+        System.out.println(ids + " splark");
+        int lastElem = ids.size()-1;
+        for(int i = ids.size()-1; i>=0; i-- ){
             allArticles.remove(i);
         }
         return allArticles;
