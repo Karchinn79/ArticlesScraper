@@ -8,6 +8,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -16,7 +18,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-
+@Component
 public class Communication {
     @Autowired
     private RestTemplate restTemplate;
@@ -56,19 +58,40 @@ public class Communication {
         System.out.println(ids + " splark");
         int lastElem = ids.size()-1;
         for(int i = ids.size()-1; i>=0; i-- ){
-            allArticles.remove(i);
+           allArticles.remove(i);
+
+
         }
         return allArticles;
     }
 
     public Article getArticle(int id){
-        return null;
+        final String URL = "https://api.spaceflightnewsapi.net/v3/articles/" + id;
+        ResponseEntity<Article> responseEntity;
+        try {
+            responseEntity = restTemplate.exchange(URL, HttpMethod.GET, null, new ParameterizedTypeReference<Article>() {
+            });
+        }
+        catch (HttpClientErrorException ex){
+            return null;
+        }
+        return responseEntity.getBody();
     }
     public void saveArticle(Article article){
 
     }
     public void removeArticle(int id){
 
+    }
+    public int getFirstArticleID(int skips){
+        String URL;
+        final int LIMIT_TO_GET_FIRST = 1;
+        if(skips > 0) URL = webURL + LIMITPARAM + LIMIT_TO_GET_FIRST + SKIPPARAM + skips;
+        else URL = webURL + LIMITPARAM + LIMIT_TO_GET_FIRST;
+        ResponseEntity<List<Article>> responseEntity =
+                restTemplate.exchange(URL, HttpMethod.GET, null, new ParameterizedTypeReference<List<Article>>() {
+                });
+        return responseEntity.getBody().get(0).getId();
     }
 }
 

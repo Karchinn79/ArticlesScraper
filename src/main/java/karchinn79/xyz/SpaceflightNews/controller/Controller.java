@@ -22,24 +22,40 @@ public class Controller {
         model.addAttribute("articles", articleService.getAllArticles());
         return "dbcontent";
     }
+
     @RequestMapping("/{id}")
     public String getArticleById(@PathVariable("id") int id, Model model){
         model.addAttribute("articleid", articleService.getAticleById(id));
         return "articleById";
     }
+
     @GetMapping("/clearDB")
     public String clearDB(){
         articleService.clearDB();
         return "redirect:./";
     }
+
     @GetMapping("/loadArticles")
     public String loadArticles(){
         logic.loadArticles();
         return "redirect:./";
     }
+
     @GetMapping("/addToBlackList/{word}")
     public String addToBlackList(@PathVariable("word") String word){
         logic.addToBlackList(word);
         return "redirect:../";
+    }
+
+    @GetMapping("/loadArticlesMulti/{limit}")
+    public String loadArticlesMulti(@PathVariable("limit") String limits){
+        int limit = Integer.parseInt(limits);
+        logic.loadMultipleArticles(1,limit);
+        return "redirect:./";
+    }
+    @GetMapping("/loadArticle/{id}")
+    public String loadArticle(@PathVariable("id") int id){
+        logic.loadArticlebyId(id);
+        return "redirect:./";
     }
 }
